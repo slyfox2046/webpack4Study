@@ -1,4 +1,5 @@
 # Project exclude paths
+/.vscode
 /lesson/node_modules/
 /lesson2-4/node_modules/
 /lesson3-1a/node_modules/
