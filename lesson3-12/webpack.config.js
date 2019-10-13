@@ -42,12 +42,15 @@ module.exports = {
                     //     },
                     //     useBuiltIns:'usage' //babel-ployfill 填充的时候，根据业务代码来决定加什么，从而减小打包文件的大小
                     // }]],
-                    "plugins":[["@babel/plugin-transform-runtime"],{
-                        "corejs":2,
-                        "helpers":true,
-                        "regenerator":true,
-                        "useESModules":false
-                    }]
+                    "plugins":["@babel/plugin-transform-runtime",
+                        {
+                            // "absoluteRuntime": false,
+                            "corejs": 2,
+                            "helpers": true,
+                            "regenerator": true,
+                            "useESModules": false
+                        }
+                    ]
                 }
             },
             {
