@@ -35,23 +35,24 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "babel-loader",  // 只是桥梁作用，还需要 @babel/preset-env
-                options:{
+               /* options:{
                     // presets:[["@babel/preset-env",{
                     //     targets:{
                     //         chrome:"67" // chrome>67版本的,就不要再进行babel的es6->es6转换了
                     //     },
                     //     useBuiltIns:'usage' //babel-ployfill 填充的时候，根据业务代码来决定加什么，从而减小打包文件的大小
                     // }]],
-                    "plugins":[["@babel/plugin-transform-runtime"],
+                    "plugins":[
+                        ["@babel/plugin-transform-runtime",
                         {
-                            "absoluteRuntime": false,
+                            // "absoluteRuntime": false,
                             "corejs": 2,
                             "helpers": true,
                             "regenerator": true,
                             "useESModules": false
-                        }
+                        }]
                     ]
-                }
+                }*/
             },
             {
             test: /\.(jpg|png|gif)$/, //正则，以.jpg结尾的文件
