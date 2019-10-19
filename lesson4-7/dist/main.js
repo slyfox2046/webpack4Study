@@ -1,33 +1,4 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
 /******/ 	function hotDisposeChunk(chunkId) {
 /******/ 		delete installedChunks[chunkId];
 /******/ 	}
@@ -92,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "def385dee1a862fe96a6";
+/******/ 	var hotCurrentHash = "48d84f88d3e378d8f0ac";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -287,7 +258,7 @@
 /******/ 				};
 /******/ 			});
 /******/ 			hotUpdate = {};
-/******/ 			for(var chunkId in installedChunks)
+/******/ 			var chunkId = "main";
 /******/ 			// eslint-disable-next-line no-lone-blocks
 /******/ 			{
 /******/ 				/*globals chunkId */
@@ -735,20 +706,6 @@
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		"main": 0
-/******/ 	};
-/******/
-/******/
-/******/
-/******/ 	// script path function
-/******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"vendors~lodash":"vendors~lodash"}[chunkId]||chunkId) + ".js"
-/******/ 	}
-/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -776,67 +733,6 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var promises = [];
-/******/
-/******/
-/******/ 		// JSONP chunk loading for javascript
-/******/
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
-/******/
-/******/ 			// a Promise means "currently loading".
-/******/ 			if(installedChunkData) {
-/******/ 				promises.push(installedChunkData[2]);
-/******/ 			} else {
-/******/ 				// setup Promise in chunk cache
-/******/ 				var promise = new Promise(function(resolve, reject) {
-/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 				});
-/******/ 				promises.push(installedChunkData[2] = promise);
-/******/
-/******/ 				// start chunk loading
-/******/ 				var script = document.createElement('script');
-/******/ 				var onScriptComplete;
-/******/
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.src = jsonpScriptSrc(chunkId);
-/******/
-/******/ 				// create error before stack unwound to get useful stacktrace later
-/******/ 				var error = new Error();
-/******/ 				onScriptComplete = function (event) {
-/******/ 					// avoid mem leaks in IE.
-/******/ 					script.onerror = script.onload = null;
-/******/ 					clearTimeout(timeout);
-/******/ 					var chunk = installedChunks[chunkId];
-/******/ 					if(chunk !== 0) {
-/******/ 						if(chunk) {
-/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-/******/ 							error.name = 'ChunkLoadError';
-/******/ 							error.type = errorType;
-/******/ 							error.request = realSrc;
-/******/ 							chunk[1](error);
-/******/ 						}
-/******/ 						installedChunks[chunkId] = undefined;
-/******/ 					}
-/******/ 				};
-/******/ 				var timeout = setTimeout(function(){
-/******/ 					onScriptComplete({ type: 'timeout', target: script });
-/******/ 				}, 120000);
-/******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				document.head.appendChild(script);
-/******/ 			}
-/******/ 		}
-/******/ 		return Promise.all(promises);
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -890,18 +786,8 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
-/******/
-/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -914,11 +800,25 @@
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
+/*! no exports provided */
 /*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("// 同步加载\n// import _ from 'lodash';\n//\n// console.log(_.join(['a','b','1c'],'***'));\n// console.log(_.join(['a','b','2c'],'***'));\n// 异步加载\nfunction getComment() {\n  return __webpack_require__.e(/*! import() | lodash */ \"vendors~lodash\").then(__webpack_require__.t.bind(null, /*! lodash */ \"./node_modules/lodash/lodash.js\", 7)).then(({\n    default: _\n  }) => {\n    var element = document.createElement('div');\n    element.innerHTML = _.join(['Dell', 'Lee'], '-');\n    return element;\n  });\n}\n\ngetComment().then(element => {\n  document.body.appendChild(element);\n}); // 代码分割，和webpack无关\n// webpack中实现代码分割，两种方式\n// 1. 同步方式：只需要在webpack.common.js中做optimization的配置\n// 2. 异步代码(import): 异步代码，无需做如何配置，会自动进行代码分割，放置到新的文件中//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanM/YjYzNSJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyDlkIzmraXliqDovb1cclxuLy8gaW1wb3J0IF8gZnJvbSAnbG9kYXNoJztcclxuLy9cclxuLy8gY29uc29sZS5sb2coXy5qb2luKFsnYScsJ2InLCcxYyddLCcqKionKSk7XHJcbi8vIGNvbnNvbGUubG9nKF8uam9pbihbJ2EnLCdiJywnMmMnXSwnKioqJykpO1xyXG5cclxuLy8g5byC5q2l5Yqg6L29XHJcbmZ1bmN0aW9uIGdldENvbW1lbnQoKSB7XHJcbiAgICByZXR1cm4gaW1wb3J0KC8qd2VicGFja0NodW5rTmFtZTpcImxvZGFzaFwiKi8nbG9kYXNoJykudGhlbigoe2RlZmF1bHQ6X30pPT57XHJcbiAgICAgICAgdmFyIGVsZW1lbnQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcclxuICAgICAgICBlbGVtZW50LmlubmVySFRNTCA9IF8uam9pbihbJ0RlbGwnLCdMZWUnXSwnLScpO1xyXG4gICAgICAgIHJldHVybiBlbGVtZW50O1xyXG4gICAgfSlcclxufVxyXG5cclxuZ2V0Q29tbWVudCgpLnRoZW4oZWxlbWVudD0+e1xyXG4gICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChlbGVtZW50KTtcclxufSk7XHJcbi8vIOS7o+eggeWIhuWJsu+8jOWSjHdlYnBhY2vml6DlhbNcclxuLy8gd2VicGFja+S4reWunueOsOS7o+eggeWIhuWJsu+8jOS4pOenjeaWueW8j1xyXG4vLyAxLiDlkIzmraXmlrnlvI/vvJrlj6rpnIDopoHlnKh3ZWJwYWNrLmNvbW1vbi5qc+S4reWBmm9wdGltaXphdGlvbueahOmFjee9rlxyXG4vLyAyLiDlvILmraXku6PnoIEoaW1wb3J0KTog5byC5q2l5Luj56CB77yM5peg6ZyA5YGa5aaC5L2V6YWN572u77yM5Lya6Ieq5Yqo6L+b6KGM5Luj56CB5YiG5Ymy77yM5pS+572u5Yiw5paw55qE5paH5Lu25LitXHJcbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQSxvS0FBQTtBQUFBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/index.js\n");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./test */ \"./src/test.js\");\n\nconsole.log(_test__WEBPACK_IMPORTED_MODULE_0__[/* default */ \"a\"].name); // 同步加载\n// import _ from 'lodash';\n//\n// var element = document.createElement('div');\n// element.innerHTML = _.join([\"Dell\",\"Lee\"],'-');\n// document.body.appendChild(element)\n// 异步加载\n// function getComment() {\n//     return import(/*webpackChunkName:\"lodash\"*/'lodash').then(({default:_})=>{\n//         var element = document.createElement('div');\n//         element.innerHTML = _.join(['Dell','Lee'],'-');\n//         return element;\n//     })\n// }\n//\n// getComment().then(element=>{\n//     document.body.appendChild(element);\n// });\n// 代码分割，和webpack无关\n// webpack中实现代码分割，两种方式\n// 1. 同步方式：只需要在webpack.common.js中做optimization的配置\n// 2. 异步代码(import): 异步代码，无需做如何配置，会自动进行代码分割，放置到新的文件中//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvaW5kZXguanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaW5kZXguanM/YjYzNSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgdGVzdCBmcm9tICcuL3Rlc3QnXHJcblxyXG5jb25zb2xlLmxvZyh0ZXN0Lm5hbWUpO1xyXG5cclxuXHJcblxyXG4vLyDlkIzmraXliqDovb1cclxuLy8gaW1wb3J0IF8gZnJvbSAnbG9kYXNoJztcclxuLy9cclxuLy8gdmFyIGVsZW1lbnQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcclxuLy8gZWxlbWVudC5pbm5lckhUTUwgPSBfLmpvaW4oW1wiRGVsbFwiLFwiTGVlXCJdLCctJyk7XHJcbi8vIGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoZWxlbWVudClcclxuXHJcbi8vIOW8guatpeWKoOi9vVxyXG4vLyBmdW5jdGlvbiBnZXRDb21tZW50KCkge1xyXG4vLyAgICAgcmV0dXJuIGltcG9ydCgvKndlYnBhY2tDaHVua05hbWU6XCJsb2Rhc2hcIiovJ2xvZGFzaCcpLnRoZW4oKHtkZWZhdWx0Ol99KT0+e1xyXG4vLyAgICAgICAgIHZhciBlbGVtZW50ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XHJcbi8vICAgICAgICAgZWxlbWVudC5pbm5lckhUTUwgPSBfLmpvaW4oWydEZWxsJywnTGVlJ10sJy0nKTtcclxuLy8gICAgICAgICByZXR1cm4gZWxlbWVudDtcclxuLy8gICAgIH0pXHJcbi8vIH1cclxuLy9cclxuLy8gZ2V0Q29tbWVudCgpLnRoZW4oZWxlbWVudD0+e1xyXG4vLyAgICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChlbGVtZW50KTtcclxuLy8gfSk7XHJcblxyXG5cclxuXHJcbi8vIOS7o+eggeWIhuWJsu+8jOWSjHdlYnBhY2vml6DlhbNcclxuLy8gd2VicGFja+S4reWunueOsOS7o+eggeWIhuWJsu+8jOS4pOenjeaWueW8j1xyXG4vLyAxLiDlkIzmraXmlrnlvI/vvJrlj6rpnIDopoHlnKh3ZWJwYWNrLmNvbW1vbi5qc+S4reWBmm9wdGltaXphdGlvbueahOmFjee9rlxyXG4vLyAyLiDlvILmraXku6PnoIEoaW1wb3J0KTog5byC5q2l5Luj56CB77yM5peg6ZyA5YGa5aaC5L2V6YWN572u77yM5Lya6Ieq5Yqo6L+b6KGM5Luj56CB5YiG5Ymy77yM5pS+572u5Yiw5paw55qE5paH5Lu25LitXHJcbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBRUE7QUFLQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBSUE7QUFDQTtBQUNBO0FBQ0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/index.js\n");
+
+/***/ }),
+
+/***/ "./src/test.js":
+/*!*********************!*\
+  !*** ./src/test.js ***!
+  \*********************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("/* harmony default export */ __webpack_exports__[\"a\"] = ({\n  name: 'Dell Lee'\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvdGVzdC5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy90ZXN0LmpzPzg0YjgiXSwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGRlZmF1bHQge1xyXG4gICAgbmFtZTonRGVsbCBMZWUnXHJcbn1cclxuIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBREEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/test.js\n");
 
 /***/ })
 
