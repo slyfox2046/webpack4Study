@@ -48,7 +48,10 @@ const devConfig = {
     plugins: [
         new webpack.HotModuleReplacementPlugin() //开启webpack HMR 功能
     ],
-
+    output: {
+        filename: '[name].js', // 入口文件输出的文件名
+        chunkFilename:'[name].chunk.js',// 其他引用的包的输出文件名
+    }
 }
 
 module.exports = merge(commonConfig,devConfig);
