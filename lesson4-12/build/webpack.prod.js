@@ -1,15 +1,12 @@
-// const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const merge = require('webpack-merge');
-const commonConfig = require('./webpack.common');
 
 const prodConfig = {
     // mode: "development",// development 开发模式，未被压缩，production 线上模式，被压缩了
     mode:"production",
     // 最佳实践
     // devtool : 'cheap-module-eval-source-map', // mode:"development" 模式下推荐使用
-    // devtool : 'cheap-module-source-map', // mode:"production" 模式下推荐使用
+    devtool : 'cheap-module-source-map', // mode:"production" 模式下推荐使用
     module:{
         rules:[
             {
@@ -52,4 +49,4 @@ const prodConfig = {
         chunkFilename:'[name].[contenthash].chunk.js',// 其他引用的包的输出文件名
     }
 };
-module.exports = merge(commonConfig,prodConfig);
+module.exports = prodConfig;

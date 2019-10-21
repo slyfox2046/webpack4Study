@@ -1,9 +1,4 @@
-const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const commonConfig = require('./webpack.common');
-
-// plugin 可以在webpack运行到某个时刻的时候，帮你做一些事情
 
 const devConfig = {
     mode: "development",// development 开发模式，未被压缩，production 线上模式，被压缩了
@@ -54,4 +49,4 @@ const devConfig = {
     }
 }
 
-module.exports = merge(commonConfig,devConfig);
+module.exports = devConfig;
