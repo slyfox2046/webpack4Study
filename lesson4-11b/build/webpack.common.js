@@ -3,10 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin }= require('clean-webpack-plugin');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const devConfig = require('webpack.dev');
-const prodConfig = require('webpack.prod');
 
-const commonConfig = {
+module.exports = {
     entry: {
         main: "./src/index.js"
     },
@@ -22,6 +20,7 @@ const commonConfig = {
                         loader: "imports-loader?this=>window" // 注意写法，把this改成window
                     }
                 ]
+
             },
             {
                 test: /\.(jpg|png|gif)$/, //正则，以.jpg结尾的文件
@@ -76,12 +75,6 @@ const commonConfig = {
         }
     },
     performance:false,// 去除文件大于244kb的警告
-}
 
-module.exports = (env)=>{
-    if(env && env.production){
-        return merge(commonConfig,prodConfig);
-    }else{
-        return merge(commonConfig,devConfig);
-    }
+
 }

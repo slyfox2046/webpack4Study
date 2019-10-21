@@ -1,5 +1,8 @@
+// const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const merge = require('webpack-merge');
+const commonConfig = require('./webpack.common');
 
 const prodConfig = {
     // mode: "development",// development 开发模式，未被压缩，production 线上模式，被压缩了
@@ -49,4 +52,4 @@ const prodConfig = {
         chunkFilename:'[name].[contenthash].chunk.js',// 其他引用的包的输出文件名
     }
 };
-module.exports = prodConfig;
+module.exports = merge(commonConfig,prodConfig);
