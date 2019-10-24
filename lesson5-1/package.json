@@ -1,12 +1,19 @@
 {
-  "name": "lesson5-1",
+  "name": "library-dell-lee-2019",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/library.js",
   "scripts": {
-    "build" : "webpack"
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
 }
