@@ -1,0 +1,18 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[0],[
+/* 0 */
+/***/ (function(module, exports) {
+
+console.log("hellow,This is Demo"); // 如果你的浏览器支持serviceWorker，则自行一些代码
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+      console.log("service-worker registed");
+    }).catch(error => {
+      console.log("service-worker register error");
+    });
+  });
+}
+
+/***/ })
+],[[0,1]]]);
