@@ -28,6 +28,7 @@ module.exports = {
         hot:true,  // 热模块更新
         hotOnly:true, // 不让浏览器重新刷新
 
+        // 只能在webpack devserver 环境下生效，即在开发环境下才生效，线上代码无效
         proxy: {
             // '/react/api':'http://www.dell-lee.com'
 
@@ -37,23 +38,32 @@ module.exports = {
                     'header.json':'demo.json'     // 路径中请求header.json 返回 demo.json 的数据，后台接口写完后，可注释该行
                 }
             }
+            
+            /*
+            '/react/api':{
+                target:'https://www.dell-lee.com', // 请求代理到哪个网址
+                secure: false, // 如果是 https 方式，开发模式下可以先将安全 关闭
 
-            // '/react/api':{
-            //     target:'https://www.dell-lee.com',
-            //     secure: false, // 如果是 https 方式，开发模式下可以先将安全 关闭
-            //
-            //     bypass: function(req, res, proxyOptions) {
-            //         // 如果这次请求是请求html文件，就返回flase ，跳过这次代理中的转发
-            //         if (req.headers.accept.indexOf('html') !== -1) {
-            //             console.log('Skipping proxy for browser request.');
-            //             return false;
-            //         }
-            //     },
-            //
-            //     pathRewrite:{
-            //         'header.json':'demo.json'     // 路径中请求header.json 返回 demo.json 的数据，后台接口写完后，可注释该行
-            //     }
-            // }
+                // bypass: function(req, res, proxyOptions) {
+                //     // 如果这次请求是请求html文件，就返回flase ，跳过这次代理中的转发
+                //     if (req.headers.accept.indexOf('html') !== -1) {
+                //         console.log('Skipping proxy for browser request.');
+                //         return false;
+                //     }
+                // },
+
+                pathRewrite:{
+                    'header.json':'demo.json'     // 路径中请求header.json 返回 demo.json 的数据，后台接口写完后，可注释该行
+                },
+                // 变更请求头
+                changeOrigin : true,
+                headers: {
+                    host:"www.dell-lee.com",
+                    cookie : 'sdfsfa' //模拟登录或者鉴权的场景
+                }
+            }
+            */
+
         }
     },
     module: {
