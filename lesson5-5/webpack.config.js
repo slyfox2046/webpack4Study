@@ -28,8 +28,22 @@ module.exports = {
         hot:true,  // 热模块更新
         hotOnly:true, // 不让浏览器重新刷新
 
-
+        // 这里只是开发模式下的配置，上线后路由的跳转可能还需要后台nginx或者Apache等配置
         historyApiFallback :true, // 对路径的请求转发到根路径的请求
+        // historyApiFallback : {
+        //     rewrites:[
+        //     {
+        //         from: /abc.html/, to: '/index.html'
+        //     },
+        //     { // 复杂一点的跳转逻辑
+        //         from: /^\/libs\/.*$/,
+        //         to: function(context) {
+        //             return '/bower_components' + context.parsedUrl.pathname;
+        //         }
+        //     }
+        //     ]
+        // },
+
         // 只能在webpack devserver 环境下生效，即在开发环境下才生效，线上代码无效
         proxy: {
 
