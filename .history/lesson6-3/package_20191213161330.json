@@ -1,0 +1,17 @@
+{
+  "name": "lesson6-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "debug" : "node --inspect --inspect node_modules/webpack/bin/webpack.js"
+    "build":"webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
