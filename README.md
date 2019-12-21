@@ -1,9 +1,10 @@
 <!--
- * @Author: slyfox
+ * @Author: Admin
  * @Date: 2019-10-14 09:57:18
- * @LastEditTime: 2019-12-14 16:49:50
- * @LastEditors: Please set LastEditors
+ * @LastEditTime : 2019-12-21 16:28:14
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \webpack4Study\README.md
  -->
-## 手把手带你玩转webpack（学习笔记）
+
+## 手把手带你玩转 webpack（学习笔记）
