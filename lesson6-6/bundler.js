@@ -47,5 +47,30 @@ const moduleAnalyser = filename => {
   };
 };
 
-const moduleInfo = moduleAnalyser('./src/index.js');
-console.log(moduleInfo);
+const makeDependenciesGraph = entry => {
+  const entryModule = moduleAnalyser(entry);
+  const graphArray = [entryModule];
+  for (let i = 0; i < graphArray.length; i++) {
+    const item = graphArray[i];
+    const { dependencies } = item;
+    if (dependencies) {
+      for (let j in dependencies) {
+        // 关键 有点类似递归,获取当前文件import的文件，再添加到数组中再进行分析
+        graphArray.push(moduleAnalyser(dependencies[j]));
+      }
+    }
+  }
+  // console.log(graphArray);
+  const graph = {};
+  graphArray.forEach(item => {
+    graph[item.filename] = {
+      dependencies: item.dependencies,
+      code: item.code,
+    };
+  });
+  // console.log(graph);
+  return graph;
+};
+
+const graphInfo = makeDependenciesGraph('./src/index.js');
+console.log(graphInfo);
