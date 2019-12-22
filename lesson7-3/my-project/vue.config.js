@@ -1,3 +1,6 @@
 module.exports = {
-  outputDir: 'dell',
+  // outputDir: 'dell',
+  css: {
+    modules:true
+  }
 };
