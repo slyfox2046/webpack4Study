@@ -213,7 +213,9 @@ module.exports = function(webpackEnv) {
       globalObject: 'this',
     },
     optimization: {
+      // 根据环境是否压缩，只有生产环境才有效
       minimize: isEnvProduction,
+      // 压缩js
       minimizer: [
         // This is only used in production mode
         new TerserPlugin({
@@ -254,6 +256,7 @@ module.exports = function(webpackEnv) {
               ascii_only: true,
             },
           },
+          // sourceMap配置
           sourceMap: shouldUseSourceMap,
         }),
         // This is only used in production mode
@@ -283,6 +286,7 @@ module.exports = function(webpackEnv) {
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       // https://github.com/facebook/create-react-app/issues/5358
+      // runtimeChunk 打包
       runtimeChunk: {
         name: entrypoint => `runtime-${entrypoint.name}`,
       },
@@ -292,6 +296,7 @@ module.exports = function(webpackEnv) {
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
+      // 默认环境添加了node_modules目录
       modules: ['node_modules', paths.appNodeModules].concat(
         modules.additionalModulePaths || [],
       ),
@@ -304,6 +309,7 @@ module.exports = function(webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
+      // 别名
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -315,6 +321,7 @@ module.exports = function(webpackEnv) {
         }),
         ...(modules.webpackAliases || {}),
       },
+      // 引入其它模块的时候做一些额外处理，加载plugins
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
@@ -327,6 +334,7 @@ module.exports = function(webpackEnv) {
         new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       ],
     },
+    // 引用loader的时候执行
     resolveLoader: {
       plugins: [
         // Also related to Plug'n'Play, but this time it tells Webpack to load its loaders
@@ -335,13 +343,16 @@ module.exports = function(webpackEnv) {
       ],
     },
     module: {
+      // 严格模式，导出内容
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
+        // 时候可以用requre.ensure语法，还是只能用import 语法异步加载
         { parser: { requireEnsure: false } },
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
+        // (js|mjs|jsx|ts|tsx) 加载相应loader进行检测
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
@@ -349,6 +360,7 @@ module.exports = function(webpackEnv) {
             {
               options: {
                 cache: true,
+                // 格式化工具
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
                 resolvePluginsRelativeTo: __dirname,
@@ -362,6 +374,7 @@ module.exports = function(webpackEnv) {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
+          // oneof 挨个匹配，匹配到就停止匹配
           oneOf: [
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
@@ -505,6 +518,8 @@ module.exports = function(webpackEnv) {
             // In production, they would get copied to the `build` folder.
             // This loader doesn't use a "test" so it will catch all modules
             // that fall through the other loaders.
+
+            // oneof 都匹配不上则最后走这里的loader file-loader
             {
               loader: require.resolve('file-loader'),
               // Exclude `js` files to keep "css" loader working as it injects
@@ -622,6 +637,7 @@ module.exports = function(webpackEnv) {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the Webpack build.
+      // PWA Progressive Web Application 在服务器挂掉后，本地浏览器中的页面还能通过缓存显示的配置
       isEnvProduction &&
         new WorkboxWebpackPlugin.GenerateSW({
           clientsClaim: true,
@@ -639,6 +655,7 @@ module.exports = function(webpackEnv) {
           ],
         }),
       // TypeScript type checking
+      // typescript 配置
       useTypeScript &&
         new ForkTsCheckerWebpackPlugin({
           typescript: resolve.sync('typescript', {
