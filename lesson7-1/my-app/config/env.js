@@ -5,16 +5,18 @@ const path = require('path');
 const paths = require('./paths');
 
 // Make sure that including paths.js after env.js will read .env variables.
+// 清除缓存，
 delete require.cache[require.resolve('./paths')];
-
+// 设置环境变量 生成环境还是开发环境
 const NODE_ENV = process.env.NODE_ENV;
 if (!NODE_ENV) {
   throw new Error(
-    'The NODE_ENV environment variable is required but was not specified.'
+    'The NODE_ENV environment variable is required but was not specified.',
   );
 }
 
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
+// 根目录创建.env文件，在文件中可以定义一下全局变量，会到该文件中读取，定义到打包的过程中
 const dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
   `${paths.dotenv}.${NODE_ENV}`,
@@ -35,7 +37,7 @@ dotenvFiles.forEach(dotenvFile => {
     require('dotenv-expand')(
       require('dotenv').config({
         path: dotenvFile,
-      })
+      }),
     );
   }
 });
@@ -50,6 +52,7 @@ dotenvFiles.forEach(dotenvFile => {
 // https://github.com/facebook/create-react-app/issues/1023#issuecomment-265344421
 // We also resolve them to make sure all tools using them work consistently.
 const appDirectory = fs.realpathSync(process.cwd());
+// 获取到期目录路径，存放至NODE_PATH中
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
@@ -60,6 +63,7 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 // injected into the application via DefinePlugin in Webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
 
+// 对路径进行整理，再返回出去
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
@@ -77,7 +81,7 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
-      }
+      },
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
   const stringified = {
